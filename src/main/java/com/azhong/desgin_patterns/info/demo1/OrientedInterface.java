@@ -1,4 +1,4 @@
-package com.azhong.desgin_patterns.info;
+package com.azhong.desgin_patterns.info.demo1;
 /**
  * 面向接口编程
  * @author Administrator

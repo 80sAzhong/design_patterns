@@ -1,4 +1,4 @@
-package com.azhong.desgin_patterns.info;
+package com.azhong.desgin_patterns.info.demo1;
 
 public class Cat implements Animal {
 
