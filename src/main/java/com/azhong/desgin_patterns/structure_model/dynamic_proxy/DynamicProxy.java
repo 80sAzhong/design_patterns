@@ -14,10 +14,10 @@ public class DynamicProxy implements InvocationHandler{
 	// 声明代理对象
     // 作用：绑定关系，即关联到哪个接口（与具体的实现类绑定）的哪些方法将被调用时，执行invoke（）
 	private Object proxyObj;
-	public Object newProxyInstance(Object proxyObj)
+	public <T> T newProxyInstance(T proxyObj)
 	{
 		this.proxyObj=proxyObj;
-		return Proxy.newProxyInstance(proxyObj.getClass().getClassLoader(), proxyObj.getClass().getInterfaces(), this);
+		return (T)Proxy.newProxyInstance(proxyObj.getClass().getClassLoader(), proxyObj.getClass().getInterfaces(), this);
 		// Proxy类 = 动态代理类的主类 
         // Proxy.newProxyInstance（）作用：根据指定的类装载器、一组接口 & 调用处理器 生成动态代理类实例，并最终返回
         // 参数说明：

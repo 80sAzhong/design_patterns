@@ -99,10 +99,10 @@ public class SingletonTest {
 	
 	public static void main(String[] args) throws Exception {
 
-//		SingletonTest.beComplicatedByExecutor0();
+		//SingletonTest.beComplicatedByExecutor0();
 //		SingletonTest.beComplicatedByExecutor1();
 //		SingletonTest.beComplicatedByExecutor2();
-//		SingletonTest.reflectAttack();
+	//ingletonTest.reflectAttack();
 		SingletonTest.reflectAttack2();
 //		SingletonTest.beComplicatedByExecutor();
 //		LazySingleton lz=LazySingleton.getInstance();
