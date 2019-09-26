@@ -1,5 +1,6 @@
 package com.azhong.desgin_patterns.create_model.single_model;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -51,28 +52,58 @@ public class SingletonTest {
 		}
 	}
 
-	public static void beComplicatedByExecutor() throws InterruptedException, ExecutionException {
+	public static void beComplicatedByExecutor2() throws InterruptedException, ExecutionException {
 		ExecutorService executors = Executors.newFixedThreadPool(10);
-		List<Future<LazySingleton>> flist=new ArrayList<Future<LazySingleton>>();
+		List<Future<LazySingleton2>> flist=new ArrayList<Future<LazySingleton2>>();
 		for(int i=0;i<10;i++) {
-			Callable<LazySingleton> task = new Callable() {
+			Callable<LazySingleton2> task = new Callable() {
 				@Override
-				public LazySingleton call() throws Exception {
-					return LazySingleton.getInstance();
+				public LazySingleton2 call() throws Exception {
+					return LazySingleton2.getInstance();
 				}
 			};
 			flist.add(executors.submit(task));
 		}
-		for (Future<LazySingleton> f : flist) {
+		for (Future<LazySingleton2> f : flist) {
 			System.out.println(f.get());
 		}
 	}
 
 
+	public static void reflectAttack() throws Exception{
+		LazySingleton3 lz0= LazySingleton3.getInstance();
+		System.out.println("lz0:"+lz0);
+		LazySingleton3 lz1= LazySingleton3.getInstance();
+		System.out.println("lz1:"+lz1);
+		System.out.println("正常情况下，实例化2个实例是否相同:"+(lz0==lz1));
+		Constructor<LazySingleton3> constructor =LazySingleton3.class.getDeclaredConstructor();
+		constructor.setAccessible(true);
+		LazySingleton3 lz2 = constructor.newInstance();
+		System.out.println("lz2:"+lz2);
+		System.out.println("通过反射攻击下，实例化2个实例是否相同:"+(lz1==lz2));
+	}
+
+	public static void reflectAttack2() throws Exception{
+		LazySingleton4 lz0= LazySingleton4.INSTANCE.getInstance();
+		System.out.println("lz0:"+lz0);
+		LazySingleton4 lz1= LazySingleton4.INSTANCE.getInstance();
+		System.out.println("lz1:"+lz1);
+		System.out.println("正常情况下，实例化2个实例是否相同:"+(lz0==lz1));
+		Constructor<LazySingleton4> constructor =LazySingleton4.class.getDeclaredConstructor();
+		constructor.setAccessible(true);
+		LazySingleton4 lz2 = constructor.newInstance();//会报异常：java.lang.NoSuchMethodException
+		//原因:反射在通过newInstance创建对象时，会检查该类是否ENUM修饰，如果是则抛出异常，反射失败
+		System.out.println("lz2:"+lz2);
+		System.out.println("通过反射攻击下，实例化2个实例是否相同:"+(lz1==lz2));
+	}
+	
 	public static void main(String[] args) throws Exception {
 
 //		SingletonTest.beComplicatedByExecutor0();
-		SingletonTest.beComplicatedByExecutor1();
+//		SingletonTest.beComplicatedByExecutor1();
+//		SingletonTest.beComplicatedByExecutor2();
+//		SingletonTest.reflectAttack();
+		SingletonTest.reflectAttack2();
 //		SingletonTest.beComplicatedByExecutor();
 //		LazySingleton lz=LazySingleton.getInstance();
 //		LazySingleton lz2=LazySingleton.getInstance();
