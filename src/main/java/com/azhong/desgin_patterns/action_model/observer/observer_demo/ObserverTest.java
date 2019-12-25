@@ -11,6 +11,7 @@ package com.azhong.desgin_patterns.action_model.observer.observer_demo;
  */
 public class ObserverTest {
     public static void main(String[] args) {
+    	System.out.println("+++++++产品经理通知开发者1，2，3变更需求++++++");
         Programmer1 p1 = new Programmer1();
         Programmer2 p2 = new Programmer2();
         Programmer3 p3 = new Programmer3();
